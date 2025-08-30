@@ -1,7 +1,12 @@
-import React from "react";
+"use client";
+import { Login } from "@/components";
 
 const DashboardPage = () => {
-  return <div>DashboardPage</div>;
+  return (
+    <>
+      <Login />
+    </>
+  );
 };
 
 export default DashboardPage;
