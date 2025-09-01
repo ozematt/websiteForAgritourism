@@ -1,12 +1,8 @@
 "use client";
-import { Login } from "@/components";
+// import { Login } from "@/components";
 
 const DashboardPage = () => {
-  return (
-    <>
-      <Login />
-    </>
-  );
+  return <>Panel</>;
 };
 
 export default DashboardPage;
