@@ -16,18 +16,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { AuthCredentials } from "@/types";
 
-const AuthForm = () => {
+const AuthForm = ({
+  onSubmit,
+}: {
+  onSubmit: (
+    data: AuthCredentials
+  ) => Promise<{ success: boolean; error?: string }>;
+}) => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      username: "",
+      name: "",
       password: "",
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof signInSchema>) => {
-    console.log(values);
+  const handleSubmit = async (data: any) => {
+    const result = await onSubmit(data);
+
+    if (result.success) {
+      console.log("poszło ok");
+      console.log(data);
+    }
   };
 
   return (
@@ -39,7 +53,7 @@ const AuthForm = () => {
         {/* user field */}
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Nazwa uzytkownika</FormLabel>
