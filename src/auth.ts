@@ -7,7 +7,7 @@ import { compare } from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { User } from "@/types";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
@@ -41,9 +41,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+
   pages: {
     signIn: "/panel",
   },
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

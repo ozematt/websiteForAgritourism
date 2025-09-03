@@ -1,12 +1,15 @@
 "use server";
 
-import { signIn } from "next-auth/react";
-import { db } from "@/database/drizzle";
-import { user } from "@/database/schema";
+import { signIn } from "@/auth";
 import { AuthCredentials } from "@/types";
-import { hash } from "bcryptjs";
-import { eq } from "drizzle-orm";
 
+//// imports for sign in fn
+// import { db } from "@/database/drizzle";
+// import { user } from "@/database/schema";
+// import { hash } from "bcryptjs";
+// import { eq } from "drizzle-orm";
+
+// sing in with credentials - logic
 export const signInWithCredentials = async (params: AuthCredentials) => {
   const { name, password } = params;
 
@@ -27,34 +30,35 @@ export const signInWithCredentials = async (params: AuthCredentials) => {
   }
 };
 
-export const signUp = async (params: AuthCredentials) => {
-  const { name, password } = params;
+//// sign up with credentials - logic
+// export const signUp = async (params: AuthCredentials) => {
+//   const { name, password } = params;
 
-  //Check if user already exist
-  const existingUser = await db
-    .select()
-    .from(user)
-    .where(eq(user.name, name))
-    .limit(1);
+//   //Check if user already exist
+//   const existingUser = await db
+//     .select()
+//     .from(user)
+//     .where(eq(user.name, name))
+//     .limit(1);
 
-  if (existingUser.length > 0) {
-    return { success: false, error: "User already exist" };
-  }
+//   if (existingUser.length > 0) {
+//     return { success: false, error: "User already exist" };
+//   }
 
-  //Hashed password from new user
-  const hashedPassword = await hash(password, 10);
+//   //Hashed password from new user
+//   const hashedPassword = await hash(password, 10);
 
-  try {
-    //signup new user to database
-    await db.insert(user).values({
-      name,
-      password: hashedPassword,
-    });
+//   try {
+//     //signup new user to database
+//     await db.insert(user).values({
+//       name,
+//       password: hashedPassword,
+//     });
 
-    await signInWithCredentials({ name, password });
-  } catch (error) {
-    console.log(error, "Signup error");
-    return { success: false, error: "Signup error" };
-  }
-  return { success: true };
-};
+//     await signInWithCredentials({ name, password });
+//   } catch (error) {
+//     console.log(error, "Signup error");
+//     return { success: false, error: "Signup error" };
+//   }
+//   return { success: true };
+// };

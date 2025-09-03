@@ -1,6 +1,6 @@
 import z from "zod";
 
 export const signInSchema = z.object({
-  name: z.string(),
-  password: z.string().min(3),
+  name: z.string().nonempty("Pole wymagane"),
+  password: z.string().nonempty("Pole wymagane"),
 });
