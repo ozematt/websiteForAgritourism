@@ -3,7 +3,7 @@ import { PanelProps } from "@/types";
 import ImageUpload from "./ImageUpload";
 
 const Panel = ({ properties }: PanelProps) => {
-  console.log(properties);
+  // console.log(properties);
 
   return (
     <>
