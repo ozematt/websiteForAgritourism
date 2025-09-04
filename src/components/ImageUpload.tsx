@@ -113,7 +113,12 @@ const ImageUpload = () => {
   return (
     <>
       {/* File input element using React ref */}
-      <input type="file" ref={fileInputRef} />
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept="image/png, image/jpeg"
+        multiple
+      />
       {/* Button to trigger the upload process */}
       <button type="button" onClick={handleUpload}>
         Upload file

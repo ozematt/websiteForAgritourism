@@ -1,5 +1,4 @@
 import { getUploadAuthParams } from "@imagekit/next/server";
-import { NextResponse } from "next/server";
 
 export async function GET() {
   const { token, expire, signature } = getUploadAuthParams({
@@ -7,7 +6,7 @@ export async function GET() {
     publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY as string,
   });
 
-  return NextResponse.json({
+  return Response.json({
     token,
     expire,
     signature,
