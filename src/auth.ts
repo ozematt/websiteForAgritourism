@@ -1,5 +1,5 @@
 import { db } from "@/database/drizzle";
-import { user } from "@/database/schema";
+import { admin } from "@/database/schema";
 import { eq } from "drizzle-orm";
 import NextAuth from "next-auth";
 import { compare } from "bcryptjs";
@@ -20,8 +20,8 @@ export const { signIn, signOut, auth } = NextAuth({
 
         const userData = await db
           .select()
-          .from(user)
-          .where(eq(user.name, credentials.name.toString()))
+          .from(admin)
+          .where(eq(admin.name, credentials.name.toString()))
           .limit(1);
 
         if (userData.length === 0) return null;

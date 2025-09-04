@@ -1,6 +1,9 @@
 import { signOut } from "@/auth";
+import { PanelProps } from "@/types";
 
-const Panel = () => {
+const Panel = ({ properties }: PanelProps) => {
+  console.log(properties);
+
   return (
     <form
       action={async () => {

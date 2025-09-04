@@ -52,59 +52,62 @@ const AuthForm = ({
   // UI
   return (
     <>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="flex flex-col gap-3"
-        >
-          {/* user field */}
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nazwa uzytkownika</FormLabel>
+      <div className="absolute inset-0 grid place-content-center gap-7">
+        <h1 className="text-2xl font-bold">Wprowadź dane logowania:</h1>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="flex flex-col gap-3"
+          >
+            {/* user field */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nazwa uzytkownika</FormLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="wprowadź nazwe użytkownika"
-                    {...field}
-                    className="placeholder:p-2"
-                  />
-                </FormControl>
+                  <FormControl>
+                    <Input
+                      placeholder="wprowadź nazwe użytkownika"
+                      {...field}
+                      className="placeholder:p-2"
+                    />
+                  </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* password field */}
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Hasło</FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* password field */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Hasło</FormLabel>
 
-                <FormControl>
-                  <Input
-                    placeholder="wprowadź hasło"
-                    {...field}
-                    className="placeholder:p-2"
-                  />
-                </FormControl>
+                  <FormControl>
+                    <Input
+                      placeholder="wprowadź hasło"
+                      {...field}
+                      className="placeholder:p-2"
+                    />
+                  </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full">
-            Wyślij
-          </Button>
-          <p className="text-center">
-            <Link href={"/"}>Wróć do strony głównej</Link>
-          </p>
-        </form>
-      </Form>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-full">
+              Wyślij
+            </Button>
+            <p className="text-center">
+              <Link href={"/"}>Wróć do strony głównej</Link>
+            </p>
+          </form>
+        </Form>
+      </div>
     </>
   );
 };

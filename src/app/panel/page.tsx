@@ -1,18 +1,23 @@
 import { auth } from "@/auth";
 import AuthForm from "@/components/AuthForm";
 import Panel from "@/components/Panel";
+import { db } from "@/database/drizzle";
+import { properties } from "@/database/schema";
 import { signInWithCredentials } from "@/lib/actions/auth";
 
 const PanelPage = async () => {
   const session = await auth();
 
+  const propertiesData = await db.select().from(properties);
+
   return (
-    <div className="absolute inset-0 grid place-content-center gap-7">
-      <h1 className="text-2xl font-bold">Wprowadź dane logowania:</h1>
-      <div className="">
-        {session ? <Panel /> : <AuthForm onSubmit={signInWithCredentials} />}
-      </div>
-    </div>
+    <>
+      {session ? (
+        <Panel properties={propertiesData} />
+      ) : (
+        <AuthForm onSubmit={signInWithCredentials} />
+      )}
+    </>
   );
 };
 
