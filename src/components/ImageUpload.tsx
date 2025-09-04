@@ -7,8 +7,6 @@ import {
   ImageKitUploadNetworkError,
   upload,
   UploadResponse,
-  Image,
-  ImageKitProvider,
 } from "@imagekit/next";
 import { useRef, useState } from "react";
 import ImagesContainer from "./ImagesContainer";

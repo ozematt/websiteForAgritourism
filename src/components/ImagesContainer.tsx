@@ -1,4 +1,3 @@
-// import { ImageKitUploadResponse } from "@/types";
 import { Image, ImageKitProvider, UploadResponse } from "@imagekit/next";
 
 interface ImagesContainerProp {
