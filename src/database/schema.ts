@@ -2,6 +2,7 @@ import {
   boolean,
   integer,
   pgTable,
+  serial,
   text,
   timestamp,
   uuid,
@@ -19,7 +20,7 @@ export const admin = pgTable("admin", {
 
 // Tabela obiektów (agroturystyki)
 export const properties = pgTable("properties", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: serial("id").primaryKey(),
   name: text("name").notNull(),
   description: text("description"),
   address: text("address"),
@@ -32,14 +33,13 @@ export const properties = pgTable("properties", {
 
 // Tabela zdjęć w galeriach
 export const galleryImages = pgTable("gallery_images", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  propertyId: uuid("property_id")
-    .references(() => properties.id)
+  id: serial("id").primaryKey(),
+  propertyId: integer("property_id")
+    .references(() => properties.id, { onDelete: "cascade" })
     .notNull(),
   imageUrl: text("image_url").notNull(),
   thumbnailUrl: text("thumbnail_url").notNull(),
   caption: text("caption"),
-  order: integer("order").default(0),
   isPrimary: boolean("is_primary").default(false), // do oznaczania głównego zdjęcia obiektu
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

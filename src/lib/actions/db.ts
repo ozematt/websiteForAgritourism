@@ -13,3 +13,12 @@ export async function saveImages(images: ModifiedImageData[]) {
     return { success: false, error: "Nie udało się zapisać zdjęć" };
   }
 }
+
+// const images = await db
+//   .select()
+//   .from(galleryImages)
+//   .where(eq(galleryImages.propertyId, propertyId))
+//   .orderBy(
+//     desc(galleryImages.isPrimary), // Główne zdjęcia pierwsze
+//     desc(galleryImages.createdAt)  // Potem najnowsze
+//   );

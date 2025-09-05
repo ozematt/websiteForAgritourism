@@ -10,7 +10,7 @@ export interface AuthCredentials {
 }
 
 export interface Property {
-  id: string;
+  id: number;
   name: string;
   description: string | null;
   address: string | null;
@@ -26,12 +26,10 @@ export interface PanelProps {
 }
 
 export interface ModifiedImageData {
-  id?: string;
-  propertyId: string | SQL<unknown>;
+  propertyId: number | SQL<unknown>;
   imageUrl: string | SQL<unknown>;
   thumbnailUrl: string | SQL<unknown>;
   caption: string | null;
-  order: number;
   isPrimary: boolean;
   createdAt?: Date;
 }

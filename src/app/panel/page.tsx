@@ -8,6 +8,7 @@ const PanelPage = async () => {
   const session = await auth();
 
   const propertiesData = await db.select().from(properties);
+  // console.log(propertiesData);
 
   return (
     <>

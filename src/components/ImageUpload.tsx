@@ -8,7 +8,7 @@ import {
   upload,
   UploadResponse,
 } from "@imagekit/next";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImagesContainer } from "@/components";
 import toast from "react-hot-toast";
 
@@ -90,9 +90,6 @@ const ImageUpload = ({ onImageUpload }: ImageUploadProps) => {
 
       // update images state with all results
       setImagesData((prevImages) => [...prevImages, ...uploadResults]);
-
-      //pass images data to Panel component
-      onImageUpload(imagesData);
     } catch (error) {
       // Handle specific error types provided by the ImageKit SDK.
       if (error instanceof ImageKitAbortError) {
@@ -134,6 +131,12 @@ const ImageUpload = ({ onImageUpload }: ImageUploadProps) => {
       fileInputRef.current.click();
     }
   };
+
+  //pass images data to Panel component
+  useEffect(() => {
+    onImageUpload(imagesData);
+    // setImagesData([]);
+  }, [imagesData]);
 
   // UI
   return (

@@ -8,22 +8,27 @@ import toast from "react-hot-toast";
 import { saveImages } from "@/lib/actions/db";
 
 const Panel = ({ properties }: PanelProps) => {
+  // DATA
   const [selectedProperty, setSelectedProperty] = useState("");
   const [imageData, setImageData] = useState<ModifiedImageData[]>([]);
+  // console.log(selectedProperty);
 
+  // LOGIC
   const handleImageData = (data: UploadResponse[]) => {
     if (!selectedProperty) {
       toast.error("Najpierw wybierz obiekt!");
       return;
     }
 
+    const propertyId = Number(selectedProperty);
+    console.log(propertyId);
+
     const imageArray: ModifiedImageData[] = data.map((image, index) => {
       return {
-        propertyId: selectedProperty,
+        propertyId: propertyId,
         imageUrl: image.url,
         thumbnailUrl: image.thumbnailUrl,
-        caption: null,
-        order: index,
+        caption: "Added by admin",
         isPrimary: index === 0,
       };
     });
@@ -37,6 +42,10 @@ const Panel = ({ properties }: PanelProps) => {
       toast.error("Dodaj najpierw jakieś zdjęcia!");
       return;
     }
+    // if (!selectedProperty) {
+    //   toast.error("Najpierw wybierz obiekt!");
+    //   return;
+    // }
 
     const result = await saveImages(imageData);
 
@@ -48,6 +57,7 @@ const Panel = ({ properties }: PanelProps) => {
     }
   };
 
+  // UI
   return (
     <>
       <div className="">
@@ -61,8 +71,9 @@ const Panel = ({ properties }: PanelProps) => {
             id="property"
             onChange={(e) => setSelectedProperty(e.target.value)}
             className="bg-amber-200"
+            value={selectedProperty}
           >
-            <option value={-1}>wybierz</option>
+            <option value="">wybierz</option>
             {properties.map((property, index) => (
               <option key={index} value={property.id}>
                 {property.name}
