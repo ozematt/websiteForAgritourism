@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
-import AuthForm from "@/components/AuthForm";
-import Panel from "@/components/Panel";
+import { AuthForm, Panel } from "@/components";
 import { db } from "@/database/drizzle";
 import { properties } from "@/database/schema";
 import { signInWithCredentials } from "@/lib/actions/auth";

@@ -1,5 +1,3 @@
-import ImageUpload from "@/components/ImageUpload";
-
 export const metadata = {
   title: "Główna · Space Tourism",
 };

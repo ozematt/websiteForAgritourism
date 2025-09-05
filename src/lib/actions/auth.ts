@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { AuthCredentials } from "@/types";
 
 //// imports for sign in fn
@@ -28,6 +28,10 @@ export const signInWithCredentials = async (params: AuthCredentials) => {
     console.log(error, "Signup error");
     return { success: false, error: "Signin error" };
   }
+};
+
+export const logout = async () => {
+  await signOut();
 };
 
 //// sign up with credentials - logic

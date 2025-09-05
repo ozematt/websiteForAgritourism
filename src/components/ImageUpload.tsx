@@ -9,11 +9,16 @@ import {
   UploadResponse,
 } from "@imagekit/next";
 import { useRef, useState } from "react";
-import ImagesContainer from "./ImagesContainer";
+import { ImagesContainer } from "@/components";
+import toast from "react-hot-toast";
 
-const ImageUpload = () => {
+interface ImageUploadProps {
+  callback: (images: UploadResponse[]) => void;
+}
+
+const ImageUpload = ({ callback }: ImageUploadProps) => {
   // State to keep track of the current upload progress (percentage)
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
   const [fileSelected, setFileSelected] = useState(false);
   const [images, setImages] = useState<UploadResponse[]>([]);
 
@@ -45,12 +50,6 @@ const ImageUpload = () => {
     }
   };
 
-  // if (fileInputRef.current?.files) {
-  //   setFileSelected(true);
-  // } else {
-  //   setFileSelected(false);
-  // }
-
   const handleUpload = async () => {
     // Access the file input element using the ref
     const fileInput = fileInputRef.current;
@@ -62,53 +61,57 @@ const ImageUpload = () => {
     // files array
     const filesArray = Array.from(fileInput.files);
 
-    // Retrieve authentication parameters for the upload.
-    // run upload function for each file
-    filesArray.map(async (file) => {
-      let authParams;
-      try {
-        authParams = await authenticator();
-      } catch (authError) {
-        console.error("Failed to authenticate for upload:", authError);
-        return;
-      }
+    try {
+      // fetch auth param once
+      const authParams = await authenticator();
       const { signature, expire, token, publicKey } = authParams;
 
-      // Call the ImageKit SDK upload function with the required parameters and callbacks.
-      try {
-        const uploadResponse = await upload({
-          // Authentication parameters
-          expire,
-          token,
-          signature,
-          publicKey,
-          file,
-          fileName: file.name, // Optionally set a custom file name
-          // Progress callback to update upload progress state
-          // onProgress: (event) => {
-          //   setProgress((event.loaded / event.total) * 100);
-          // },
-          // Abort signal to allow cancellation of the upload if needed.
-          abortSignal: abortController.signal,
-        });
-        setImages((prevImages) => [...prevImages, uploadResponse]);
-        setFileSelected(false);
-      } catch (error) {
-        // Handle specific error types provided by the ImageKit SDK.
-        if (error instanceof ImageKitAbortError) {
-          console.error("Upload aborted:", error.reason);
-        } else if (error instanceof ImageKitInvalidRequestError) {
-          console.error("Invalid request:", error.message);
-        } else if (error instanceof ImageKitUploadNetworkError) {
-          console.error("Network error:", error.message);
-        } else if (error instanceof ImageKitServerError) {
-          console.error("Server error:", error.message);
-        } else {
-          // Handle any other errors that may occur.
-          console.error("Upload error:", error);
+      // create promises array with all files for upload
+      const uploadPromises = filesArray.map(async (file) => {
+        try {
+          const uploadResponse = await upload({
+            expire,
+            token,
+            signature,
+            publicKey,
+            file,
+            fileName: file.name,
+            abortSignal: abortController.signal,
+          });
+          return uploadResponse;
+        } catch (error) {
+          console.error(`Error uploading ${file.name}:`, error);
+          throw error; // throw error for Promise.all
         }
+      });
+
+      // Wait for all uploads
+      const uploadResults = await Promise.all(uploadPromises);
+
+      // update images state with all results
+      setImages((prevImages) => [...prevImages, ...uploadResults]);
+      callback(images);
+      setFileSelected(false);
+    } catch (error) {
+      // Handle specific error types provided by the ImageKit SDK.
+      if (error instanceof ImageKitAbortError) {
+        console.error("Upload aborted:", error.reason);
+        toast.error("Upload został przerwany przez użytkownika");
+      } else if (error instanceof ImageKitInvalidRequestError) {
+        console.error("Invalid request:", error.message);
+        toast.error("Nieprawidłowe dane pliku");
+      } else if (error instanceof ImageKitUploadNetworkError) {
+        console.error("Network error:", error.message);
+        toast.error("Problem z połączeniem internetowym");
+      } else if (error instanceof ImageKitServerError) {
+        console.error("Server error:", error.message);
+        toast.error("Błąd serwera podczas uploadu");
+      } else {
+        // Handle any other errors that may occur.
+        console.error("Upload error:", error);
+        toast.error("Wystapił nieoczekiwany błąd");
       }
-    });
+    }
   };
 
   const handleFileSelect = () => {
@@ -118,35 +121,41 @@ const ImageUpload = () => {
       setFileSelected(false);
     }
   };
+
   const handleRefButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
-  console.log(images);
+
+  // console.log(images);
 
   return (
     <>
-      {/* File input element using React ref */}
-      <input
-        className="hidden"
-        type="file"
-        ref={fileInputRef}
-        accept="image/png, image/jpeg"
-        onChange={handleFileSelect}
-        multiple
-      />
-      <button
-        type="button"
-        onClick={fileSelected ? handleUpload : handleRefButton}
-      >
-        {fileSelected ? "Upload file" : "Dodaj zdjęcie"}
-      </button>
-      <br />
+      {/* Upload image logic */}
+      <div>
+        <input
+          className="hidden"
+          type="file"
+          ref={fileInputRef}
+          accept="image/png, image/jpeg"
+          onChange={handleFileSelect}
+          multiple
+        />
+        <button
+          className="ring-1"
+          type="button"
+          onClick={fileSelected ? handleUpload : handleRefButton}
+        >
+          {fileSelected ? "Upload file" : "Dodaj zdjęcie"}
+        </button>
+        <br />
 
-      {/* Display the current upload progress */}
-      {/* Upload progress: <progress value={progress} max={100}></progress> */}
+        {/* Display the current upload progress */}
+        {/* Upload progress: <progress value={progress} max={100}></progress> */}
+      </div>
+
       <ImagesContainer data={images} />
     </>
   );

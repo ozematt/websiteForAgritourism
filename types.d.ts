@@ -24,3 +24,14 @@ export interface Property {
 export interface PanelProps {
   properties: Property[];
 }
+
+export interface ModifiedImageData {
+  id?: string;
+  propertyId: string | SQL<unknown>;
+  imageUrl: string | SQL<unknown>;
+  thumbnailUrl: string | SQL<unknown>;
+  caption: string | null;
+  order: number;
+  isPrimary: boolean;
+  createdAt?: Date;
+}

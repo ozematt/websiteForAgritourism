@@ -33,7 +33,7 @@ export const properties = pgTable("properties", {
 // Tabela zdjęć w galeriach
 export const galleryImages = pgTable("gallery_images", {
   id: uuid("id").primaryKey().defaultRandom(),
-  propertyId: integer("property_id")
+  propertyId: uuid("property_id")
     .references(() => properties.id)
     .notNull(),
   imageUrl: text("image_url").notNull(),
