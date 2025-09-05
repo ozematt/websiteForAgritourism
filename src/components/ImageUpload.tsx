@@ -13,14 +13,13 @@ import { ImagesContainer } from "@/components";
 import toast from "react-hot-toast";
 
 interface ImageUploadProps {
-  callback: (images: UploadResponse[]) => void;
+  onImageUpload: (imagesData: UploadResponse[]) => void;
 }
 
-const ImageUpload = ({ callback }: ImageUploadProps) => {
-  // State to keep track of the current upload progress (percentage)
-  // const [progress, setProgress] = useState(0);
-  const [fileSelected, setFileSelected] = useState(false);
-  const [images, setImages] = useState<UploadResponse[]>([]);
+const ImageUpload = ({ onImageUpload }: ImageUploadProps) => {
+  // DATA
+  const [isFileSelected, setIsFileSelected] = useState(false);
+  const [imagesData, setImagesData] = useState<UploadResponse[]>([]);
 
   // Create a ref for the file input element to access its files easily
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -28,6 +27,7 @@ const ImageUpload = ({ callback }: ImageUploadProps) => {
   // Create an AbortController instance to provide an option to cancel the upload if needed.
   const abortController = new AbortController();
 
+  // LOGIC
   //imagekit auth function
   const authenticator = async () => {
     try {
@@ -89,9 +89,10 @@ const ImageUpload = ({ callback }: ImageUploadProps) => {
       const uploadResults = await Promise.all(uploadPromises);
 
       // update images state with all results
-      setImages((prevImages) => [...prevImages, ...uploadResults]);
-      callback(images);
-      setFileSelected(false);
+      setImagesData((prevImages) => [...prevImages, ...uploadResults]);
+
+      //pass images data to Panel component
+      onImageUpload(imagesData);
     } catch (error) {
       // Handle specific error types provided by the ImageKit SDK.
       if (error instanceof ImageKitAbortError) {
@@ -111,17 +112,22 @@ const ImageUpload = ({ callback }: ImageUploadProps) => {
         console.error("Upload error:", error);
         toast.error("Wystapił nieoczekiwany błąd");
       }
+    } finally {
+      setIsFileSelected(false);
     }
   };
 
+  // set flag when files are selected
   const handleFileSelect = () => {
-    if (fileInputRef.current?.files && fileInputRef.current.files.length > 0) {
-      setFileSelected(true);
+    const filesList = fileInputRef.current?.files;
+    if (filesList && filesList.length > 0) {
+      setIsFileSelected(true);
     } else {
-      setFileSelected(false);
+      setIsFileSelected(false);
     }
   };
 
+  //function for select file default button toggle
   const handleRefButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (fileInputRef.current) {
@@ -129,8 +135,7 @@ const ImageUpload = ({ callback }: ImageUploadProps) => {
     }
   };
 
-  // console.log(images);
-
+  // UI
   return (
     <>
       {/* Upload image logic */}
@@ -143,20 +148,17 @@ const ImageUpload = ({ callback }: ImageUploadProps) => {
           onChange={handleFileSelect}
           multiple
         />
+
         <button
           className="ring-1"
           type="button"
-          onClick={fileSelected ? handleUpload : handleRefButton}
+          onClick={isFileSelected ? handleUpload : handleRefButton}
         >
-          {fileSelected ? "Upload file" : "Dodaj zdjęcie"}
+          {isFileSelected ? "Upload file" : "Dodaj zdjęcie"}
         </button>
-        <br />
-
-        {/* Display the current upload progress */}
-        {/* Upload progress: <progress value={progress} max={100}></progress> */}
       </div>
 
-      <ImagesContainer data={images} />
+      <ImagesContainer data={imagesData} />
     </>
   );
 };
