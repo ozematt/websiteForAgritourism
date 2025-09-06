@@ -6,11 +6,14 @@ import { useState } from "react";
 import { UploadResponse } from "@imagekit/next";
 import toast from "react-hot-toast";
 import { saveImages } from "@/lib/actions/db";
+import { useRouter } from "next/navigation";
 
 const Panel = ({ properties }: PanelProps) => {
   // DATA
   const [selectedProperty, setSelectedProperty] = useState("");
   const [imageData, setImageData] = useState<ModifiedImageData[]>([]);
+
+  const router = useRouter();
   // console.log(selectedProperty);
 
   // LOGIC
@@ -52,6 +55,7 @@ const Panel = ({ properties }: PanelProps) => {
     if (result.success) {
       toast.success("Zdjęcia zostały zapisane!");
       setImageData([]); // wyczyść stan po zapisie
+      router.refresh();
     } else {
       toast.error(result.error || "Coś poszło nie tak");
     }

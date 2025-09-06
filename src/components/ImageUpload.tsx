@@ -134,8 +134,9 @@ const ImageUpload = ({ onImageUpload }: ImageUploadProps) => {
 
   //pass images data to Panel component
   useEffect(() => {
-    onImageUpload(imagesData);
-    // setImagesData([]);
+    if (imagesData.length > 0) {
+      onImageUpload(imagesData);
+    }
   }, [imagesData]);
 
   // UI
