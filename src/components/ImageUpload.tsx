@@ -11,6 +11,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { ImagesContainer } from "@/components";
 import toast from "react-hot-toast";
+import { FileT, useFileStore } from "@/stores/fileData.store";
 
 interface ImageUploadProps {
   onImageUpload: (imagesData: UploadResponse[]) => void;
@@ -18,8 +19,17 @@ interface ImageUploadProps {
 
 const ImageUpload = ({ onImageUpload }: ImageUploadProps) => {
   // DATA
-  const [isFileSelected, setIsFileSelected] = useState(false);
   const [imagesData, setImagesData] = useState<UploadResponse[]>([]);
+
+  console.log(imagesData);
+
+  // zustand store
+  const {
+    files,
+    selected: isFileSelected,
+    addFilesData,
+    removeFilesData,
+  } = useFileStore();
 
   // Create a ref for the file input element to access its files easily
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -109,18 +119,20 @@ const ImageUpload = ({ onImageUpload }: ImageUploadProps) => {
         console.error("Upload error:", error);
         toast.error("Wystapił nieoczekiwany błąd");
       }
-    } finally {
-      setIsFileSelected(false);
     }
   };
 
-  // set flag when files are selected
   const handleFileSelect = () => {
     const filesList = fileInputRef.current?.files;
     if (filesList && filesList.length > 0) {
-      setIsFileSelected(true);
+      // modified data for zustand store
+      const modifiedFileData = Array.from(filesList, (file) => {
+        return { name: file.name, size: file.size, type: file.type };
+      });
+      // add data to store
+      addFilesData(modifiedFileData);
     } else {
-      setIsFileSelected(false);
+      removeFilesData();
     }
   };
 

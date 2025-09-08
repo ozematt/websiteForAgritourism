@@ -24,7 +24,7 @@ const Panel = ({ properties }: PanelProps) => {
     }
 
     const propertyId = Number(selectedProperty);
-    console.log(propertyId);
+    // console.log(propertyId);
 
     const imageArray: ModifiedImageData[] = data.map((image, index) => {
       return {
@@ -37,7 +37,7 @@ const Panel = ({ properties }: PanelProps) => {
     });
 
     setImageData((prevData) => [...prevData, ...imageArray]);
-    console.log("Nowe zdjęcia:", imageArray);
+    // console.log("Nowe zdjęcia:", imageArray);
   };
 
   const handleSubmit = async () => {
@@ -45,10 +45,6 @@ const Panel = ({ properties }: PanelProps) => {
       toast.error("Dodaj najpierw jakieś zdjęcia!");
       return;
     }
-    // if (!selectedProperty) {
-    //   toast.error("Najpierw wybierz obiekt!");
-    //   return;
-    // }
 
     const result = await saveImages(imageData);
 
