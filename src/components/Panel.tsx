@@ -7,6 +7,16 @@ import { UploadResponse } from "@imagekit/next";
 import toast from "react-hot-toast";
 import { saveImages } from "@/lib/actions/db";
 import { useRouter } from "next/navigation";
+import Calendar from "./Calendar";
+
+const reservations = [
+  {
+    startDate: "2024-06-15",
+    endDate: "2024-06-20",
+    roomNumber: "101",
+  },
+  // więcej rezerwacji...
+];
 
 const Panel = ({ properties }: PanelProps) => {
   // DATA
@@ -32,7 +42,7 @@ const Panel = ({ properties }: PanelProps) => {
         imageUrl: image.url,
         thumbnailUrl: image.thumbnailUrl,
         caption: "Added by admin",
-        isPrimary: index === 0,
+        isPrimary: false,
       };
     });
 
@@ -88,6 +98,7 @@ const Panel = ({ properties }: PanelProps) => {
             Submit
           </button>
         </form>
+        <Calendar reservations={reservations} />
         <Logout />
       </div>
     </>
