@@ -24,14 +24,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           .where(eq(admin.name, credentials.name.toString()))
           .limit(1);
 
-        if (userData.length === 0) return null;
+        // LATER ADD BCRYPT PASSWORD!!!
 
-        const isPasswordValid = await compare(
-          credentials.password.toString(),
-          userData[0].password
-        );
+        // if (userData.length === 0) return null;
 
-        if (!isPasswordValid) return null;
+        // const isPasswordValid = await compare(
+        //   credentials.password.toString(),
+        //   userData[0].password
+        // );
+
+        // if (!isPasswordValid) return null;
 
         return {
           id: userData[0].id.toString(),
@@ -43,7 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
 
   pages: {
-    signIn: "/panel",
+    signIn: "/login",
   },
 
   callbacks: {

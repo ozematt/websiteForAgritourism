@@ -71,7 +71,7 @@ const Panel = ({ properties }: PanelProps) => {
   return (
     <>
       <div className="">
-        <form
+        {/* <form
           action={handleSubmit}
           className="ring-2 ring-amber-800 flex flex-col justify-center items-center gap-3"
         >
@@ -97,9 +97,9 @@ const Panel = ({ properties }: PanelProps) => {
           <button type="submit" className="bg-amber-700 p-3">
             Submit
           </button>
-        </form>
-        <Calendar reservations={reservations} />
-        <Logout />
+        </form> */}
+        {/* <Calendar reservations={reservations} /> */}
+        {/* <Logout /> */}
       </div>
     </>
   );

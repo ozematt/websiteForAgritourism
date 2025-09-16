@@ -15,19 +15,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { AuthCredentials } from "@/types";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
-const AuthForm = ({
-  onSubmit,
-}: {
-  onSubmit: (
-    data: AuthCredentials
-  ) => Promise<{ success: boolean; error?: string }>;
-}) => {
+import toast from "react-hot-toast";
+import { redirect, useRouter } from "next/navigation";
+import { signInWithCredentials } from "@/lib/actions/auth";
+
+const LoginPage = () => {
   // DATA
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -39,11 +33,11 @@ const AuthForm = ({
 
   // LOGIC
   const handleSubmit = async (data: any) => {
-    const result = await onSubmit(data);
+    const result = await signInWithCredentials(data);
 
     if (result.success) {
       toast.success("Witaj w Panelu!");
-      router.refresh();
+      redirect("/panel");
     } else {
       toast.error("Nieprawidłowe dane logowania.");
     }
@@ -112,4 +106,4 @@ const AuthForm = ({
   );
 };
 
-export default AuthForm;
+export default LoginPage;

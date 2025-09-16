@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 const Layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
 
-  if (!session?.user?.id) redirect("/"); // to sign-in
+  if (!session?.user?.id) redirect("/login"); // to login
 
   return (
     <main className="flex min-h-screen w-full flex-row">

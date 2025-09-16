@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Główna · Space Tourism",
+  title: "Główna · Agro Tourism",
 };
 
 export default function Home() {
