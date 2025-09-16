@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
 import toast from "react-hot-toast";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { signInWithCredentials } from "@/lib/actions/auth";
 
 const LoginPage = () => {

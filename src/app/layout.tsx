@@ -1,24 +1,13 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm_plex_sans",
   subsets: ["latin"],
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Strone dla agroturystyki",
-  description: "Agroturystyka na Roztoczu",
-};
 
 export default async function RootLayout({
   children,
@@ -30,9 +19,7 @@ export default async function RootLayout({
   return (
     <html lang="pl">
       <SessionProvider session={session}>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased max-container`}
-        >
+        <body className={`${ibmPlexSans.variable} max-container antialiased`}>
           {children}
           <Toaster />
         </body>
