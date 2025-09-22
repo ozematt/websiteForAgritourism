@@ -1,169 +1,169 @@
-"use client";
-// import { baseRating, gradients } from '@/utils'
-import { Fugaz_One } from "next/font/google";
-import React, { useState } from "react";
+"use client"; // Ważne dla Next.js 15 App Router
 
-const months = {
-  January: "Jan",
-  February: "Feb",
-  March: "Mar",
-  April: "Apr",
-  May: "May",
-  June: "Jun",
-  July: "Jul",
-  August: "Aug",
-  September: "Sept",
-  October: "Oct",
-  November: "Nov",
-  December: "Dec",
-};
-const monthsArr = Object.keys(months);
-const now = new Date();
-const dayList = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+import { useState, useRef } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import { DateSelectArg, EventClickArg, EventApi } from "@fullcalendar/core";
 
-const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
-
-interface Reservation {
-  startDate: string; // lub Date
-  endDate: string; // lub Date
-  roomNumber: string;
-  // inne właściwości rezerwacji
+interface Event {
+  id: string;
+  title: string;
+  start: string;
+  end?: string;
+  color?: string;
 }
 
-interface CalendarProps {
-  reservations: Reservation[];
-}
+const MyCalendar = () => {
+  const [events, setEvents] = useState<Event[]>([
+    {
+      id: "1",
+      title: "Meeting z klientem",
+      start: "2024-12-20T10:00:00",
+      end: "2024-12-26T11:00:00",
+      color: "#3b82f6",
+    },
+    {
+      id: "2",
+      title: "Prezentacja projektu",
+      start: "2024-12-20T14:00:00",
+      end: "2024-12-24T15:30:00",
+      color: "#ef4444",
+    },
+    {
+      id: "3",
+      title: "Prezentacja projektu",
+      start: "2024-12-20T14:00:00",
+      end: "2024-12-24T15:30:00",
+      color: "#ef5252",
+    },
+    {
+      id: "4",
+      title: "Prezentacja projektu",
+      start: "2024-12-20T14:00:00",
+      end: "2024-12-24T15:30:00",
+      color: "#ef5252",
+    },
+  ]);
 
-export default function Calendar({ reservations }: CalendarProps) {
-  const isDateReserved = (date: Date) => {
-    return reservations.some((reservation) => {
-      const startDate = new Date(reservation.startDate);
-      const endDate = new Date(reservation.endDate);
-      return date >= startDate && date <= endDate;
-    });
+  const calendarRef = useRef<FullCalendar>(null);
+
+  // Obsługa wyboru daty/czasu
+  const handleDateSelect = (selectInfo: DateSelectArg) => {
+    const title = prompt("Wprowadź tytuł wydarzenia:");
+
+    if (title) {
+      const newEvent: Event = {
+        id: Date.now().toString(),
+        title,
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
+        color: "#10b981",
+      };
+
+      setEvents((prev) => [...prev, newEvent]);
+    }
+
+    selectInfo.view.calendar.unselect();
   };
 
-  //   const { demo, completeData, handleSetMood } = props;
-  const now = new Date();
-  const currMonth = now.getMonth();
-  const [selectedMonth, setSelectMonth] = useState(
-    Object.keys(months)[currMonth]
-  );
-
-  const [selectedYear, setSelectedYear] = useState(now.getFullYear());
-
-  const numericMonth = monthsArr.indexOf(selectedMonth);
-  //   const data = completeData?.[selectedYear]?.[numericMonth] || {};
-
-  function handleIncrementMonth(val: number) {
-    // value +1 -1
-    // if we hit the bounds of the months, then we can just adjust the year that is displayed instead
-    if (numericMonth + val < 0) {
-      // set month value = 11 and decrement the year
-      setSelectedYear((curr) => curr - 1);
-      setSelectMonth(monthsArr[monthsArr.length - 1]);
-    } else if (numericMonth + val > 11) {
-      // set month val = 0 and increment the year
-      setSelectedYear((curr) => curr + 1);
-      setSelectMonth(monthsArr[0]);
-    } else {
-      setSelectMonth(monthsArr[numericMonth + val]);
+  // Obsługa kliknięcia w wydarzenie
+  const handleEventClick = (clickInfo: EventClickArg) => {
+    if (confirm(`Czy chcesz usunąć wydarzenie '${clickInfo.event.title}'?`)) {
+      setEvents((prev) =>
+        prev.filter((event) => event.id !== clickInfo.event.id),
+      );
     }
-  }
+  };
 
-  const monthNow = new Date(
-    selectedYear,
-    Object.keys(months).indexOf(selectedMonth),
-    1
-  );
-  const firstDayOfMonth = monthNow.getDay();
-  const daysInMonth = new Date(
-    selectedYear,
-    Object.keys(selectedMonth).indexOf(selectedMonth) + 1,
-    0
-  ).getDate();
+  // Obsługa przeciągnięcia wydarzenia
+  const handleEventDrop = (dropInfo: any) => {
+    const updatedEvent: Event = {
+      id: dropInfo.event.id,
+      title: dropInfo.event.title,
+      start: dropInfo.event.startStr,
+      end: dropInfo.event.endStr,
+      color: dropInfo.event.backgroundColor,
+    };
 
-  const daysToDisplay = firstDayOfMonth + daysInMonth;
-
-  const numRows = Math.floor(daysToDisplay / 7) + (daysToDisplay % 7 ? 1 : 0);
+    setEvents((prev) =>
+      prev.map((event) =>
+        event.id === updatedEvent.id ? updatedEvent : event,
+      ),
+    );
+  };
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="grid grid-cols-5 gap-4">
-        <button
-          onClick={() => {
-            handleIncrementMonth(-1);
+    <div className="mx-auto max-w-6xl pt-4">
+      {/* Kalendarz */}
+      <div className="rounded-lg bg-white p-4 shadow-lg">
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          className="mr-auto text-indigo-400 text-lg sm:text-xl duration-200 hover:opacity-60"
-        >
-          <i className="fa-solid fa-circle-chevron-left"></i>
-        </button>
-        <p
-          className={
-            "text-center col-span-3 capitalized whitespace-nowrap textGradient " +
-            fugaz.className
-          }
-        >
-          {selectedMonth}, {selectedYear}
-        </p>
-        <button
-          onClick={() => {
-            handleIncrementMonth(+1);
+          events={events}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          weekends={true}
+          editable={true}
+          droppable={true}
+          select={handleDateSelect}
+          eventClick={handleEventClick}
+          eventDrop={handleEventDrop}
+          height="auto"
+          locale="pl" // Polski język
+          buttonText={{
+            today: "Dzisiaj",
+            month: "Miesiąc",
+            week: "Tydzień",
+            day: "Dzień",
           }}
-          className="ml-auto ring-1 text-indigo-400 text-lg sm:text-xl duration-200 hover:opacity-60"
-        >
-          <i className="fa-solid fa-circle-chevron-right"></i>
-        </button>
+          dayHeaderFormat={{ weekday: "short" }}
+          slotMinTime="06:00:00"
+          slotMaxTime="22:00:00"
+          allDaySlot={false}
+          eventTimeFormat={{
+            hour: "2-digit",
+            minute: "2-digit",
+            meridiem: false,
+          }}
+        />
       </div>
-      <div className="flex flex-col overflow-hidden gap-1 py-4 sm:py-6 md:py-10">
-        {[...Array(numRows).keys()].map((row, rowIndex) => {
-          return (
-            <div key={rowIndex} className="grid grid-cols-7 gap-1">
-              {dayList.map((dayOfWeek, dayOfWeekIndex) => {
-                let dayIndex =
-                  rowIndex * 7 + dayOfWeekIndex - (firstDayOfMonth - 1);
 
-                let dayDisplay =
-                  dayIndex > daysInMonth
-                    ? false
-                    : row === 0 && dayOfWeekIndex < firstDayOfMonth
-                    ? false
-                    : true;
-
-                let isToday = dayIndex === now.getDate();
-
-                if (!dayDisplay) {
-                  return <div className="bg-white" key={dayOfWeekIndex} />;
-                }
-
-                let color = "white";
-
-                return (
-                  <div
-                    style={{ background: color }}
-                    className={
-                      "text-xs sm:text-sm border border-solid p-2 flex items-center gap-2 justify-between rounded-lg " +
-                      (isToday ? " border-indigo-400" : " border-indigo-100") +
-                      (color === "white" ? " text-indigo-400" : " text-white")
-                    }
-                    key={dayOfWeekIndex}
-                  >
-                    <p>{dayIndex}</p>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+      {/* Lista wydarzeń */}
+      <div className="mt-6 rounded-lg bg-gray-50 p-4">
+        <h3 className="mb-3 text-lg font-semibold">Nadchodzące wydarzenia:</h3>
+        {events.length === 0 ? (
+          <p className="text-gray-500">Brak wydarzeń</p>
+        ) : (
+          <div className="space-y-2">
+            {events.map((event) => (
+              <div
+                key={event.id}
+                className="flex items-center gap-3 rounded bg-white p-2"
+              >
+                <div
+                  className="h-4 w-4 rounded"
+                  style={{ backgroundColor: event.color }}
+                />
+                <span className="font-medium">{event.title}</span>
+                <span className="text-sm text-gray-500">
+                  {new Date(event.start).toLocaleDateString("pl-PL")}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default MyCalendar;

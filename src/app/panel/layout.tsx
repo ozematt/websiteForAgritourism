@@ -35,10 +35,10 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <main className="flex min-h-screen ring-1">
+      <main className="flex min-h-screen">
         <Sidebar properties={properties} />
-        <div className="flex w-full ring-1 ring-red-500">
-          <div className="w-full p-4 ring-2">
+        <div className="flex w-full bg-gray-200">
+          <div className="w-full p-4">
             <p className="text-2xl font-semibold">Dzień dobry, Jan Kowalski</p>
             <p className="text-xs opacity-50">
               Sprawdź rezerwacji w danym obiekcie

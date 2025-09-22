@@ -120,6 +120,29 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+
+.fc {
+  font-family: inherit;
+}
+
+.fc-event {
+  border: none !important;
+  border-radius: 6px !important;
+}
+
+.fc-daygrid-event {
+  margin: 2px 0 !important;
+}
+
+.fc-button {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+.fc-button:hover {
+  background-color: #2563eb !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
