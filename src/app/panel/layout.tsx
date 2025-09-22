@@ -1,25 +1,26 @@
 import { auth } from "@/auth";
 import { Sidebar } from "@/components";
+import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 const properties = [
   {
-    id: 1,
+    id: "1",
     name: "Domek_1",
     beds: 2,
     baths: 1,
     icon: "/panel_icons/house.svg",
   },
   {
-    id: 2,
+    id: "2",
     name: "Domek_2",
     beds: 4,
     baths: 2,
     icon: "/panel_icons/house.svg",
   },
   {
-    id: 3,
+    id: "3",
     name: "Domek_3",
     beds: 6,
     baths: 3,
@@ -42,9 +43,10 @@ const Layout = async ({ children }: { children: ReactNode }) => {
             <p className="text-xs opacity-50">
               Sprawdź rezerwacji w danym obiekcie
             </p>
+            <Separator className="mt-4 mb-4" />
+            {children}
           </div>
           {/* <p>Header</p> */}
-          {children}
         </div>
       </main>
     </>

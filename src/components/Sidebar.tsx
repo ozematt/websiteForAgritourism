@@ -1,15 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { createSlug } from "@/lib/helpers";
 import Image from "next/image";
 import Link from "next/link";
 // import { properties } from '@/database/schema';
 
 interface Property {
+  id: string;
   name: string;
+  icon: string;
   beds: number;
   baths: number;
-  icon: string;
-  id: number;
+  slug?: string;
 }
 
 interface Props {
@@ -29,24 +31,28 @@ const Sidebar = ({ properties }: Props) => {
           <p className="text-xs">Jan Kowalski</p>
         </div>
       </div>
+
       <Separator className="mt-4 mb-4" />
+
       <div className="">
-        <p className="pb-4 text-xs opacity-50">Obiekty:</p>
+        <p className="mb-2 text-xs opacity-50">Obiekty:</p>
         {properties.map((property) => (
           <Link
-            href={String(property.id)}
-            key={property.name}
-            className="flex items-center gap-4 rounded-md p-3 hover:bg-blue-100"
+            href={`/panel/${createSlug(property.name)}`}
+            key={property.id}
+            className="flex items-center gap-4 rounded-md p-3 transition-colors hover:bg-blue-100"
           >
-            <Image
-              src={property.icon}
-              alt="icon"
-              width={24}
-              height={24}
-              loading="eager"
-            />
-            <div>
-              <p className="font-bold">{property.name}</p>
+            <div className="relative h-6 w-6 flex-shrink-0">
+              <Image
+                src={property.icon}
+                alt={`Ikona ${property.name}`}
+                fill
+                sizes="24px"
+                className="object-contain"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate font-bold">{property.name}</p>
               <p className="text-xs opacity-50">
                 {property.beds} Beds · {property.baths} Baths
               </p>
