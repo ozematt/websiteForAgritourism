@@ -40,7 +40,7 @@ const Sidebar = ({ properties }: Props) => {
           <Link
             href={`/panel/${createSlug(property.name)}`}
             key={property.id}
-            className="flex items-center gap-4 rounded-md p-3 transition-colors hover:bg-blue-100"
+            className="hover:bg-panel-accent/50 rounded-panel-medium flex items-center gap-4 p-3 transition-colors"
           >
             <div className="relative h-6 w-6 flex-shrink-0">
               <Image

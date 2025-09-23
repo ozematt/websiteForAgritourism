@@ -3,7 +3,6 @@
 import { useState, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { DateSelectArg, EventClickArg, EventApi } from "@fullcalendar/core";
 
@@ -97,38 +96,31 @@ const MyCalendar = () => {
   return (
     <div className="mx-auto max-w-6xl pt-4">
       {/* Kalendarz */}
-      <div className="rounded-lg bg-white p-4 shadow-lg">
+      <div className="rounded-panel-medium bg-white p-4 shadow-lg">
         <FullCalendar
           ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
-            left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
+            left: "prev next today",
+            center: "",
+            right: "title",
           }}
+          firstDay={1}
           events={events}
           selectable={true}
           selectMirror={true}
-          dayMaxEvents={true}
-          weekends={true}
           editable={true}
           droppable={true}
           select={handleDateSelect}
           eventClick={handleEventClick}
           eventDrop={handleEventDrop}
           height="auto"
-          locale="pl" // Polski język
+          locale="pl"
           buttonText={{
-            today: "Dzisiaj",
-            month: "Miesiąc",
-            week: "Tydzień",
-            day: "Dzień",
+            today: "Wróć do dziś",
           }}
           dayHeaderFormat={{ weekday: "short" }}
-          slotMinTime="06:00:00"
-          slotMaxTime="22:00:00"
-          allDaySlot={false}
           eventTimeFormat={{
             hour: "2-digit",
             minute: "2-digit",

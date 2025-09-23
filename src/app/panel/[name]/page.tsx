@@ -6,7 +6,7 @@ const UnitPage = async ({ params }: { params: Promise<{ name: string }> }) => {
 
   return (
     <>
-      <div className="rounded-md bg-gray-50 p-4">
+      <div className="rounded-panel-medium bg-gray-50 p-4">
         <div className="flex items-center gap-4 py-4">
           <div className="relative h-6 w-6 flex-shrink-0">
             <Image

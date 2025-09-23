@@ -1,5 +1,6 @@
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
