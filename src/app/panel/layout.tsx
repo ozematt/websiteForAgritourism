@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { Sidebar } from "@/components";
+import AdminPanel from "@/components/admin_panel_design_system";
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
@@ -36,7 +37,8 @@ const Layout = async ({ children }: { children: ReactNode }) => {
   return (
     <>
       <main className="flex min-h-screen">
-        <Sidebar properties={properties} />
+        {/* <Sidebar properties={properties} /> */}
+        <Sidebar />
         <div className="flex w-full bg-gray-200">
           <div className="w-full p-4">
             <p className="text-2xl font-semibold">Dzień dobry, Jan Kowalski</p>
@@ -46,8 +48,8 @@ const Layout = async ({ children }: { children: ReactNode }) => {
             <Separator className="mt-4 mb-4" />
             {children}
           </div>
-          {/* <p>Header</p> */}
         </div>
+        <AdminPanel />
       </main>
     </>
   );

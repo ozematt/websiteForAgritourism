@@ -40,21 +40,14 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* project variables */
+  /* zmienne panelu administracyjnego */
   --color-panel-accent: #ebf2ff;
   --color-panel-primary: #2563eb;
   --color-panel-black: var(--color-gray-900);
   --radius-panel-medium: calc(var(--radius) /* 0.25rem = 4px */ - 2px);
-}
 
-* {
-  box-sizing: border-box;
-}
-
-.max-container {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
+  /* zmienne od claude */
+  --color-sidebar-bg: var(--color-slate-900);
 }
 
 :root {
@@ -126,6 +119,27 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* klasy projektu */
+* {
+  box-sizing: border-box;
+}
+
+.max-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* klasy FullCalendar */
 .fc {
   font-family: inherit;
 }
@@ -143,11 +157,13 @@
   border-radius: var(--radius-panel-medium) !important;
 }
 
+/* rezerwacje - events */
 .fc-daygrid-event {
   margin: 4px 0 !important;
   padding-left: 5px !important;
 }
 
+/* przyciski nawigacji kalendarza */
 .fc-button {
   background-color: var(--color-panel-accent) !important;
   border: 0 !important;
@@ -166,10 +182,13 @@
   outline: 2px solid #3b82f6 !important;
   outline-offset: 2px !important;
 }
+
+/* odstęp miedzy przyciskami a kalendarzem */
 .fc-header-toolbar {
   margin-bottom: 12px !important;
 }
 
+/* nazwa miesiąca */
 .fc-toolbar .fc-toolbar-title {
   @apply text-base font-bold;
   border-radius: var(--radius-panel-medium) !important;
@@ -178,6 +197,7 @@
   text-transform: capitalize;
 }
 
+/* ramka dni tygodnia */
 .fc-col-header {
   @apply rounded-t-md;
 }
@@ -187,11 +207,11 @@
 }
 
 .fc-col-header-cell:first-child {
-  @apply rounded-tl-lg border-0; /* poniedziałek: lewy górny róg */
+  @apply rounded-tl-lg border-0;
 }
 
 .fc-col-header-cell:last-child {
-  @apply rounded-tr-lg border-0; /* niedziela: prawy górny róg */
+  @apply rounded-tr-lg border-0;
 }
 
 /* Button "Wróć do dziś" */
@@ -215,13 +235,4 @@
   color: var(--color-panel-black) !important;
   fill: var(--color-panel-black) !important;
   transform: scale(0.8) !important;
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }

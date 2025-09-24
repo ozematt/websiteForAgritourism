@@ -1,9 +1,16 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { createSlug } from "@/lib/helpers";
 import Image from "next/image";
 import Link from "next/link";
 // import { properties } from '@/database/schema';
+
+import { House, Settings } from "lucide-react";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Logout from "./Logout";
 
 interface Property {
   id: string;
@@ -18,49 +25,75 @@ interface Props {
   properties: Property[];
 }
 
-const Sidebar = ({ properties }: Props) => {
+const properties = [
+  {
+    id: "1",
+    name: "Domek_1",
+    beds: 2,
+    baths: 1,
+    icon: "/panel_icons/house.svg",
+  },
+  {
+    id: "2",
+    name: "Domek_2",
+    beds: 4,
+    baths: 2,
+    icon: "/panel_icons/house.svg",
+  },
+  {
+    id: "3",
+    name: "Domek_3",
+    beds: 6,
+    baths: 3,
+    icon: "/panel_icons/house.svg",
+  },
+];
+
+const Sidebar = () => {
+  const params = usePathname();
+  console.log(params.split("/")[2]);
+
+  const [activeTab, setActiveTab] = useState(params.split("/")[2] || "/panel");
+
   return (
-    <div className="w-full max-w-[250px] p-4">
-      <div className="flex items-center gap-3">
-        <Avatar className="h-10 w-10">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>AD</AvatarFallback>
-        </Avatar>
-        <div>
-          <p className="text-xl font-semibold">Admin</p>
-          <p className="text-xs">Jan Kowalski</p>
-        </div>
+    <aside className="bg-sidebar-bg flex h-screen w-100 flex-col p-6 text-white">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-blue-400">AdminPanel</h1>
+        <p className="text-sm text-slate-400">System zarządzania</p>
       </div>
 
-      <Separator className="mt-4 mb-4" />
-
-      <div className="">
-        <p className="mb-2 text-xs opacity-50">Obiekty:</p>
+      <nav className="space-y-2">
+        <Link
+          href={"/panel"}
+          onClick={() => setActiveTab("/panel")}
+          className={`mb-5 flex w-full items-center gap-3 rounded-lg p-3 transition-colors ${
+            activeTab === "/panel"
+              ? "bg-blue-600 text-white"
+              : "text-slate-300 hover:bg-slate-800"
+          }`}
+        >
+          <Settings size={20} />
+          Panel
+        </Link>
+        <p className="text-xs text-slate-400">Obiekty</p>
         {properties.map((property) => (
           <Link
-            href={`/panel/${createSlug(property.name)}`}
             key={property.id}
-            className="hover:bg-panel-accent/50 rounded-panel-medium flex items-center gap-4 p-3 transition-colors"
+            href={`/panel/${createSlug(property.name)}`}
+            onClick={() => setActiveTab(createSlug(property.name))}
+            className={`flex w-full items-center gap-3 rounded-lg p-3 transition-colors ${
+              activeTab === createSlug(property.name)
+                ? "bg-blue-600 text-white"
+                : "text-slate-300 hover:bg-slate-800"
+            }`}
           >
-            <div className="relative h-6 w-6 flex-shrink-0">
-              <Image
-                src={property.icon}
-                alt={`Ikona ${property.name}`}
-                fill
-                sizes="24px"
-                className="object-contain"
-              />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-bold">{property.name}</p>
-              <p className="text-xs opacity-50">
-                {property.beds} Beds · {property.baths} Baths
-              </p>
-            </div>
+            <House size={20} />
+            {property.name}
           </Link>
         ))}
-      </div>
-    </div>
+      </nav>
+      <Logout />
+    </aside>
   );
 };
 
