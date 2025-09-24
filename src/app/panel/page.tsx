@@ -1,4 +1,4 @@
-import { Panel } from "@/components";
+import { Dashboard, Panel } from "@/components";
 import { db } from "@/database/drizzle";
 import { properties } from "@/database/schema";
 
@@ -7,7 +7,8 @@ const PanelPage = async () => {
 
   return (
     <>
-      <Panel properties={propertiesData} />
+      {/* <Panel properties={propertiesData} /> */}
+      <Dashboard />
     </>
   );
 };

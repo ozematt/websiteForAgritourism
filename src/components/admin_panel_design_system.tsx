@@ -154,7 +154,7 @@ export const AdminPanel = () => {
   };
 
   const Sidebar = () => (
-    <div className="bg-sidebar-bg min-h-screen w-10 p-6 text-white">
+    <div className="bg-sidebar-bg min-h-screen w-64 p-6 text-white">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-blue-400">AdminPanel</h1>
         <p className="text-sm text-slate-400">System zarządzania</p>

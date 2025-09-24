@@ -1,24 +1,25 @@
 import MyCalendar from "@/components/Calendar";
-import Image from "next/image";
+import { Calendar, Plus } from "lucide-react";
 
 const UnitPage = async ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = await params;
 
   return (
     <>
-      <div className="rounded-panel-medium bg-gray-50 p-4">
-        <div className="flex items-center gap-4 py-4">
-          <div className="relative h-6 w-6 flex-shrink-0">
-            <Image
-              src={"/panel_icons/calendar.svg"}
-              alt={`Ikona kalendarza`}
-              fill
-              sizes="24px"
-              className="object-contain"
-            />
+      <div className="p-6">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Calendar size={20} />
+            <h2 className="text-xl font-bold text-slate-900">
+              Kalendarz rezerwacji
+            </h2>
           </div>
-          <p className="truncate font-bold">Kalendarz</p>
+          <button className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+            <Plus size={20} />
+            Nowa rezerwacja
+          </button>
         </div>
+
         <MyCalendar />
       </div>
     </>

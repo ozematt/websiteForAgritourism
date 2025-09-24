@@ -4,3 +4,6 @@ export { default as Logout } from "./Logout";
 export { default as Panel } from "./Panel";
 export { default as PropertyList } from "./PropertyList";
 export { default as Sidebar } from "./Sidebar";
+export { default as StatusBadge } from "./StatusBadge";
+export { default as Dashboard } from "./Dashboard";
+export { default as Header } from "./Header";

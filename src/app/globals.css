@@ -165,12 +165,13 @@
 
 /* przyciski nawigacji kalendarza */
 .fc-button {
-  background-color: var(--color-panel-accent) !important;
+  background-color: transparent !important;
   border: 0 !important;
 }
 
 .fc-button:hover {
-  background-color: var(--color-blue-300) !important;
+  background-color: var(--color-slate-100) !important;
+  border-radius: 12px !important;
 }
 
 .fc-button:focus:not(:focus-visible) {
@@ -185,16 +186,12 @@
 
 /* odstęp miedzy przyciskami a kalendarzem */
 .fc-header-toolbar {
-  margin-bottom: 12px !important;
+  margin-bottom: 24px !important;
 }
 
 /* nazwa miesiąca */
 .fc-toolbar .fc-toolbar-title {
-  @apply text-base font-bold;
-  border-radius: var(--radius-panel-medium) !important;
-  background: var(--color-panel-accent);
-  padding: 6.4px 10.4px;
-  text-transform: capitalize;
+  @apply text-lg font-semibold;
 }
 
 /* ramka dni tygodnia */
@@ -235,4 +232,12 @@
   color: var(--color-panel-black) !important;
   fill: var(--color-panel-black) !important;
   transform: scale(0.8) !important;
+}
+
+.fc-daygrid-day {
+  @apply rounded-lg p-1;
+}
+.fc-daygrid-body {
+  border-collapse: separate !important;
+  border-spacing: 0.5rem;
 }

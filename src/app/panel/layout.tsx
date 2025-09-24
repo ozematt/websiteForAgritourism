@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
-import { Sidebar } from "@/components";
+import { Header, Sidebar } from "@/components";
 import AdminPanel from "@/components/admin_panel_design_system";
+import Dashboard from "@/components/Dashboard";
 import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
@@ -39,18 +40,14 @@ const Layout = async ({ children }: { children: ReactNode }) => {
       <main className="flex min-h-screen">
         {/* <Sidebar properties={properties} /> */}
         <Sidebar />
-        <div className="flex w-full bg-gray-200">
-          <div className="w-full p-4">
-            <p className="text-2xl font-semibold">Dzień dobry, Jan Kowalski</p>
-            <p className="text-xs opacity-50">
-              Sprawdź rezerwacji w danym obiekcie
-            </p>
-            <Separator className="mt-4 mb-4" />
-            {children}
+        <div className="flex-1">
+          <Header />
+          <div className="flex w-full bg-gray-200">
+            <div className="w-full">{children}</div>
           </div>
         </div>
-        <AdminPanel />
       </main>
+      <AdminPanel />
     </>
   );
 };
