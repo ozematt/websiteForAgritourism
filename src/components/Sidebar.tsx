@@ -55,7 +55,7 @@ const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(params.split("/")[2] || "/panel");
 
   return (
-    <aside className="bg-sidebar-bg flex min-h-screen w-64 flex-col p-6 text-white">
+    <aside className="bg-dark-blue flex h-full min-h-screen w-64 flex-col p-6 text-white">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-blue-400">AdminPanel</h1>
         <p className="text-sm text-slate-400">System zarządzania</p>
@@ -90,8 +90,10 @@ const Sidebar = () => {
             {property.name}
           </Link>
         ))}
+        <div className="mt-10">
+          <Logout />
+        </div>
       </nav>
-      <Logout />
     </aside>
   );
 };

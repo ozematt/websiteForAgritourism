@@ -5,6 +5,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { DateSelectArg, EventClickArg, EventApi } from "@fullcalendar/core";
+import { Calendar, Plus } from "lucide-react";
 
 interface Event {
   id: string;
@@ -14,7 +15,7 @@ interface Event {
   color?: string;
 }
 
-const MyCalendar = () => {
+const UnitCalendar = () => {
   const [events, setEvents] = useState<Event[]>([
     {
       id: "1",
@@ -94,47 +95,56 @@ const MyCalendar = () => {
   };
 
   return (
-    <div className="mx-auto max-w-6xl">
-      {/* Kalendarz */}
-      <div className="rounded-panel-medium bg-white p-6 shadow-lg">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: "title",
-            center: "",
-            right: "prev,next",
-          }}
-          firstDay={1}
-          events={events}
-          selectable={true}
-          selectMirror={true}
-          editable={true}
-          droppable={true}
-          select={handleDateSelect}
-          eventClick={handleEventClick}
-          eventDrop={handleEventDrop}
-          height="auto"
-          locale="pl"
-          dayHeaderFormat={{ weekday: "short" }}
-          dayHeaderContent={({ date }) => {
-            const options: Intl.DateTimeFormatOptions = { weekday: "short" };
-            const raw = new Intl.DateTimeFormat("pl-PL", options).format(date);
-            // usunięcie kropki, pierwsza litera duża
-            const clean = raw.replace(/\./g, "");
-            return clean.charAt(0).toUpperCase() + clean.slice(1);
-          }}
-          eventTimeFormat={{
-            hour: "2-digit",
-            minute: "2-digit",
-            meridiem: false,
-          }}
-        />
+    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Calendar size={20} />
+          <h2 className="text-xl font-bold text-slate-900">
+            Kalendarz rezerwacji
+          </h2>
+        </div>
+        <button className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+          <Plus size={20} />
+          Nowa rezerwacja
+        </button>
       </div>
+      <FullCalendar
+        ref={calendarRef}
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        headerToolbar={{
+          left: "prev,next",
+          center: "",
+          right: "title",
+        }}
+        firstDay={1}
+        events={events}
+        selectable={true}
+        selectMirror={true}
+        editable={true}
+        droppable={true}
+        select={handleDateSelect}
+        eventClick={handleEventClick}
+        eventDrop={handleEventDrop}
+        height="auto"
+        locale="pl"
+        dayHeaderFormat={{ weekday: "short" }}
+        dayHeaderContent={({ date }) => {
+          const options: Intl.DateTimeFormatOptions = { weekday: "short" };
+          const raw = new Intl.DateTimeFormat("pl-PL", options).format(date);
+          // usunięcie kropki, pierwsza litera duża
+          const clean = raw.replace(/\./g, "");
+          return clean.charAt(0).toUpperCase() + clean.slice(1);
+        }}
+        eventTimeFormat={{
+          hour: "2-digit",
+          minute: "2-digit",
+          meridiem: false,
+        }}
+      />
 
       {/* Lista wydarzeń */}
-      <div className="mt-6 rounded-lg bg-gray-50 p-4">
+      {/* <div className="mt-6 rounded-lg bg-gray-50 p-4">
         <h3 className="mb-3 text-lg font-semibold">Nadchodzące wydarzenia:</h3>
         {events.length === 0 ? (
           <p className="text-gray-500">Brak wydarzeń</p>
@@ -157,9 +167,9 @@ const MyCalendar = () => {
             ))}
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default MyCalendar;
+export default UnitCalendar;

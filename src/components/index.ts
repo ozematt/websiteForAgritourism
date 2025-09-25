@@ -7,3 +7,7 @@ export { default as Sidebar } from "./Sidebar";
 export { default as StatusBadge } from "./StatusBadge";
 export { default as Dashboard } from "./Dashboard";
 export { default as Header } from "./Header";
+export { default as UnitCalendar } from "./UnitCalendar";
+export { default as UnitReservation } from "./UnitReservation";
+export { default as UnitGallery } from "./UnitGallery";
+export { default as MobileHeader } from "./MobileHeader";

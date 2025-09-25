@@ -7,7 +7,7 @@ import { UploadResponse } from "@imagekit/next";
 import toast from "react-hot-toast";
 import { saveImages } from "@/lib/actions/db";
 import { useRouter } from "next/navigation";
-import Calendar from "./Calendar";
+import Calendar from "./UnitCalendar";
 
 const reservations = [
   {

@@ -1,8 +1,6 @@
 import { auth } from "@/auth";
-import { Header, Sidebar } from "@/components";
-import AdminPanel from "@/components/admin_panel_design_system";
-import Dashboard from "@/components/Dashboard";
-import { Separator } from "@/components/ui/separator";
+import { Header, MobileHeader, Sidebar } from "@/components";
+import MobileAdminPanel from "@/components/nextjs_mobile_admin";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -39,15 +37,22 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     <>
       <main className="flex min-h-screen">
         {/* <Sidebar properties={properties} /> */}
-        <Sidebar />
+        <div className="block lg:hidden">
+          <MobileHeader />
+        </div>
+        <div className="hidden lg:block">
+          <Sidebar />
+        </div>
         <div className="flex-1">
-          <Header />
-          <div className="flex w-full bg-gray-200">
+          <div className="hidden lg:block">
+            <Header />
+          </div>
+          <div className="flex w-full bg-gray-200 pt-18 lg:pt-0">
             <div className="w-full">{children}</div>
           </div>
         </div>
       </main>
-      <AdminPanel />
+      {/* <MobileAdminPanel /> */}
     </>
   );
 };

@@ -47,7 +47,8 @@
   --radius-panel-medium: calc(var(--radius) /* 0.25rem = 4px */ - 2px);
 
   /* zmienne od claude */
-  --color-sidebar-bg: var(--color-slate-900);
+  --color-dark-blue: var(--color-slate-900);
+  --color-main-blue: var(--color-blue-400);
 }
 
 :root {
@@ -159,7 +160,7 @@
 
 /* rezerwacje - events */
 .fc-daygrid-event {
-  margin: 4px 0 !important;
+  margin: 0 5px !important;
   padding-left: 5px !important;
 }
 
@@ -186,7 +187,7 @@
 
 /* odstęp miedzy przyciskami a kalendarzem */
 .fc-header-toolbar {
-  margin-bottom: 24px !important;
+  margin-bottom: 12px !important;
 }
 
 /* nazwa miesiąca */
@@ -196,11 +197,11 @@
 
 /* ramka dni tygodnia */
 .fc-col-header {
-  @apply rounded-t-md;
+  @apply rounded-t-md p-3;
 }
 
 .fc-col-header-cell {
-  @apply bg-panel-accent border-0;
+  @apply bg-main-blue border-0 text-sm font-medium text-white;
 }
 
 .fc-col-header-cell:first-child {
@@ -211,14 +212,9 @@
   @apply rounded-tr-lg border-0;
 }
 
-/* Button "Wróć do dziś" */
-.fc-today-button {
-  color: var(--color-panel-black) !important;
-}
-
-.fc-today-button:focus {
-  outline: none !important;
-  box-shadow: none !important;
+/* numer dnia w miesiącu */
+.fc-daygrid-day-top {
+  padding: 10px 10px 0 0 !important;
 }
 
 /* Czarne strzałki */
@@ -232,12 +228,4 @@
   color: var(--color-panel-black) !important;
   fill: var(--color-panel-black) !important;
   transform: scale(0.8) !important;
-}
-
-.fc-daygrid-day {
-  @apply rounded-lg p-1;
-}
-.fc-daygrid-body {
-  border-collapse: separate !important;
-  border-spacing: 0.5rem;
 }
