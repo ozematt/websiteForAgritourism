@@ -1,16 +1,11 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { createSlug } from "@/lib/helpers";
-import Image from "next/image";
-import Link from "next/link";
 // import { properties } from '@/database/schema';
-
-import { House, Settings } from "lucide-react";
-import { useState } from "react";
+import Link from "next/link";
+import { Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Logout from "./Logout";
+import PropertyLink from "./PropertyLink";
 
 interface Property {
   id: string;
@@ -50,9 +45,7 @@ const properties = [
 ];
 
 const Sidebar = () => {
-  const params = usePathname();
-
-  const [activeTab, setActiveTab] = useState(params.split("/")[2] || "/panel");
+  const pathname = usePathname();
 
   return (
     <aside className="bg-dark-blue flex h-full min-h-screen w-64 flex-col p-6 text-white">
@@ -64,9 +57,8 @@ const Sidebar = () => {
       <nav className="space-y-2">
         <Link
           href={"/panel"}
-          onClick={() => setActiveTab("/panel")}
           className={`mb-5 flex w-full items-center gap-3 rounded-lg p-3 transition-colors ${
-            activeTab === "/panel"
+            pathname === "/panel"
               ? "bg-blue-600 text-white"
               : "text-slate-300 hover:bg-slate-800"
           }`}
@@ -76,19 +68,7 @@ const Sidebar = () => {
         </Link>
         <p className="text-xs text-slate-400">Obiekty</p>
         {properties.map((property) => (
-          <Link
-            key={property.id}
-            href={`/panel/${createSlug(property.name)}`}
-            onClick={() => setActiveTab(createSlug(property.name))}
-            className={`flex w-full items-center gap-3 rounded-lg p-3 transition-colors ${
-              activeTab === createSlug(property.name)
-                ? "bg-blue-600 text-white"
-                : "text-slate-300 hover:bg-slate-800"
-            }`}
-          >
-            <House size={20} />
-            {property.name}
-          </Link>
+          <PropertyLink key={property.id} property={property} />
         ))}
         <div className="mt-10">
           <Logout />

@@ -6,7 +6,7 @@ const UnitPage = async ({ params }: { params: Promise<{ name: string }> }) => {
   const { name } = await params;
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6">
       <UnitCalendar />
       <UnitReservation />
       <UnitGallery />

@@ -1,5 +1,11 @@
 import { auth } from "@/auth";
-import { Header, MobileHeader, Sidebar } from "@/components";
+import {
+  Header,
+  MobileHeader,
+  MobilePropertyList,
+  Sidebar,
+} from "@/components";
+// import MobileUnits from "@/components/MobilePropertyList";
 import MobileAdminPanel from "@/components/nextjs_mobile_admin";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
@@ -48,7 +54,12 @@ const Layout = async ({ children }: { children: ReactNode }) => {
             <Header />
           </div>
           <div className="flex w-full bg-gray-200 pt-18 lg:pt-0">
-            <div className="w-full">{children}</div>
+            <div className="w-full p-6">
+              <div className="block lg:hidden">
+                <MobilePropertyList />
+              </div>
+              {children}
+            </div>
           </div>
         </div>
       </main>

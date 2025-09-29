@@ -48,7 +48,7 @@ const reservations = [
 
 const Dashboard = () => {
   return (
-    <div className="p-6">
+    <div className="">
       <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {[
           {
