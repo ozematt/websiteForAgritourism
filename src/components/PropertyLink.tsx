@@ -24,8 +24,8 @@ const PropertyLink = ({ property, mobile }: Props) => {
       href={`/panel/${createSlug(property.name)}`}
       className={`flex w-full items-center gap-3 rounded-lg p-3 transition-colors ${
         isActive
-          ? "bg-blue-600 text-white"
-          : `${mobile ? "bg-gray-50 text-slate-900 hover:bg-blue-100" : "text-slate-300 hover:bg-slate-800"}`
+          ? "bg-blue-600 font-bold text-white"
+          : `${mobile ? "bg-gray-50 font-bold text-slate-900 hover:bg-blue-100" : "text-slate-300 hover:bg-slate-800"}`
       }`}
     >
       <House size={20} />

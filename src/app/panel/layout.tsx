@@ -1,12 +1,12 @@
 import { auth } from "@/auth";
 import {
   Header,
+  MobileBottomNavigation,
   MobileHeader,
   MobilePropertyList,
   Sidebar,
 } from "@/components";
-// import MobileUnits from "@/components/MobilePropertyList";
-import MobileAdminPanel from "@/components/nextjs_mobile_admin";
+
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -58,6 +58,9 @@ const Layout = async ({ children }: { children: ReactNode }) => {
                 <MobilePropertyList />
               </div>
               {children}
+              <div className="block lg:hidden">
+                <MobileBottomNavigation />
+              </div>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { properties } from "@/database/schema";
 
 const PanelPage = async () => {
   const propertiesData = await db.select().from(properties);
+  console.log(propertiesData);
 
   return (
     <>
