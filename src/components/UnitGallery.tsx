@@ -1,4 +1,5 @@
 import { Edit, Eye, Image, Trash2, Upload } from "lucide-react";
+import SectionTitle from "./SectionTitle";
 
 const images = [
   {
@@ -37,18 +38,10 @@ const images = [
 
 const UnitGallery = () => {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="sectionContainer">
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Image size={20} />
-          <h2 className="text-xl font-bold text-slate-900">
-            Zarządzanie zdjęciami
-          </h2>
-        </div>
-        <button
-          //   onClick={() => setShowImageModal(true)}
-          className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
-        >
+        <SectionTitle Icon={Image} title="Galeria" />
+        <button className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
           <Upload size={20} />
           Dodaj zdjęcie
         </button>

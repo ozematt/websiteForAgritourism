@@ -13,3 +13,4 @@ export { default as UnitGallery } from "./UnitGallery";
 export { default as MobileHeader } from "./MobileHeader";
 export { default as MobilePropertyList } from "./MobilePropertyList";
 export { default as PropertyLink } from "./PropertyLink";
+export { default as SectionTitle } from "./SectionTitle";

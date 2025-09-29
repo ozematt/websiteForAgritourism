@@ -140,6 +140,15 @@
   margin: 0 auto;
 }
 
+.sectionContainer {
+  @apply mb-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm;
+}
+@media (max-width: 768px) {
+  .sectionContainer {
+    @apply mb-4 p-4;
+  }
+}
+
 /* klasy FullCalendar */
 .fc {
   font-family: inherit;

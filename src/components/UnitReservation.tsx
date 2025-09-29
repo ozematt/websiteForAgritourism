@@ -1,5 +1,6 @@
 import { User, Users } from "lucide-react";
-import StatusBadge, { Status } from "./StatusBadge";
+import { Status } from "./StatusBadge";
+import { SectionTitle, StatusBadge } from "@/components";
 
 // Sample data
 const reservations = [
@@ -37,13 +38,8 @@ const reservations = [
 
 const UnitReservation = () => {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="mb-6 flex items-center gap-2">
-        <Users size={20} />
-        <h2 className="text-xl font-bold text-slate-900">
-          Ostatnie rezerwacje
-        </h2>
-      </div>
+    <div className="sectionContainer space-y-6">
+      <SectionTitle Icon={Users} title="Ostatnie rezerwacje" />
       <div className="space-y-3">
         {reservations.slice(0, 3).map((res) => (
           <div

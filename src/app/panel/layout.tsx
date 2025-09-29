@@ -42,7 +42,6 @@ const Layout = async ({ children }: { children: ReactNode }) => {
   return (
     <>
       <main className="flex min-h-screen">
-        {/* <Sidebar properties={properties} /> */}
         <div className="block lg:hidden">
           <MobileHeader />
         </div>
@@ -54,7 +53,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
             <Header />
           </div>
           <div className="flex w-full bg-gray-200 pt-18 lg:pt-0">
-            <div className="w-full p-6">
+            <div className="w-full p-4 md:p-6">
               <div className="block lg:hidden">
                 <MobilePropertyList />
               </div>
@@ -63,7 +62,6 @@ const Layout = async ({ children }: { children: ReactNode }) => {
           </div>
         </div>
       </main>
-      {/* <MobileAdminPanel /> */}
     </>
   );
 };

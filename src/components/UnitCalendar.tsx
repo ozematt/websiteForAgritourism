@@ -6,6 +6,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { DateSelectArg, EventClickArg, EventApi } from "@fullcalendar/core";
 import { Calendar, Plus } from "lucide-react";
+import { SectionTitle } from "@/components";
 
 interface Event {
   id: string;
@@ -95,17 +96,12 @@ const UnitCalendar = () => {
   };
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="sectionContainer">
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Calendar size={20} />
-          <h2 className="text-xl font-bold text-slate-900">
-            Kalendarz rezerwacji
-          </h2>
-        </div>
-        <button className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
+        <SectionTitle Icon={Calendar} title="Terminarz" />
+        <button className="flex cursor-pointer items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition-all hover:bg-blue-600">
           <Plus size={20} />
-          Nowa rezerwacja
+          Dodaj rezerwacje
         </button>
       </div>
       <FullCalendar

@@ -1,3 +1,11 @@
+import type { LucideProps } from "lucide-react";
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
+
+export type LucideReactIconType = ForwardRefExoticComponent<
+  LucideProps & RefAttributes<SVGSVGElement>
+>;
+
+// chuj wi
 export interface User {
   id?: string;
   name?: string;
