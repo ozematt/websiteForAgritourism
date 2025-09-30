@@ -6,17 +6,17 @@ import {
 } from "@/components";
 
 // Symulacja wolnego ładowania
-// async function slowData() {
-//   await new Promise((resolve) => setTimeout(resolve, 13000)); // 13 sekundy
-//   return { data: "loaded" };
-// }
+async function slowData() {
+  await new Promise((resolve) => setTimeout(resolve, 13000)); // 13 sekundy
+  return { data: "loaded" };
+}
 
 const PropertyPage = async ({
   params,
 }: {
   params: Promise<{ name: string }>;
 }) => {
-  // await slowData();
+  await slowData();
 
   const { name } = await params;
 

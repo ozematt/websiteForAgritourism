@@ -53,7 +53,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
             <Header />
           </div>
           <div className="flex w-full bg-gray-200 pt-18 lg:pt-0">
-            <div className="w-full p-4 md:p-6">
+            <div className="w-full p-4 md:p-8">
               <div className="block lg:hidden">
                 <MobilePropertyList />
               </div>

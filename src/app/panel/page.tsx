@@ -8,7 +8,6 @@ const PanelPage = async () => {
 
   return (
     <>
-      {/* <Panel properties={propertiesData} /> */}
       <Dashboard />
     </>
   );
