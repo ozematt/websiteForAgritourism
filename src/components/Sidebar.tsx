@@ -48,7 +48,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="bg-dark-blue flex h-full min-h-screen w-64 flex-col p-6 text-white">
+    <aside className="bg-dark-blue h-full min-h-screen w-72 px-8 py-6 text-white">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-blue-400">AdminPanel</h1>
         <p className="text-sm text-slate-400">System zarządzania</p>

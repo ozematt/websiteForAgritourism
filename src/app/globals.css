@@ -42,13 +42,15 @@
 
   /* zmienne panelu administracyjnego */
   --color-panel-accent: #ebf2ff;
-  --color-panel-primary: #2563eb;
   --color-panel-black: var(--color-gray-900);
   --radius-panel-medium: calc(var(--radius) /* 0.25rem = 4px */ - 2px);
 
   /* zmienne od claude */
   --color-dark-blue: var(--color-slate-900);
   --color-main-blue: var(--color-blue-400);
+
+  --color-panel-primary: #2563eb;
+  --color-dashboard-slate: var(--color-slate-200);
 }
 
 :root {
@@ -131,13 +133,11 @@
 
 /* klasy projektu */
 * {
-  box-sizing: border-box;
+  @apply box-border;
 }
 
 .max-container {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
+  @apply m-auto w-full max-w-[1440px];
 }
 
 .sectionContainer {
@@ -145,53 +145,39 @@
 }
 
 /* klasy FullCalendar */
-.fc {
-  font-family: inherit;
-}
-
 .fc * {
-  border: none !important;
+  @apply border-0!;
 }
 
+/* dzień miesiąca */
 .fc-daygrid-day {
-  border: 1px solid #e5e7eb !important;
+  @apply border-dashboard-slate/50! border-2!;
+}
+
+.fc-daygrid-day:hover {
+  @apply bg-dashboard-slate cursor-pointer transition-colors duration-200;
 }
 
 .fc-event {
-  border: none !important;
-  border-radius: var(--radius-panel-medium) !important;
+  @apply rounded-panel-medium! border-0!;
 }
 
 /* rezerwacje - events */
 .fc-daygrid-event {
-  margin: 0 5px !important;
-  padding-left: 5px !important;
+  @apply mx-1! my-0! pl-1!;
 }
 
 /* przyciski nawigacji kalendarza */
 .fc-button {
-  background-color: transparent !important;
-  border: 0 !important;
+  @apply rounded-panel-medium! mr-2! border-0! bg-slate-100!;
 }
-
 .fc-button:hover {
-  background-color: var(--color-slate-100) !important;
-  border-radius: 12px !important;
-}
-
-.fc-button:focus:not(:focus-visible) {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.fc-button:focus-visible {
-  outline: 2px solid #3b82f6 !important;
-  outline-offset: 2px !important;
+  @apply bg-dashboard-slate;
 }
 
 /* odstęp miedzy przyciskami a kalendarzem */
 .fc-header-toolbar {
-  margin-bottom: 12px !important;
+  @apply mb-3!;
 }
 
 /* nazwa miesiąca */
@@ -218,18 +204,24 @@
 
 /* numer dnia w miesiącu */
 .fc-daygrid-day-top {
-  padding: 10px 10px 0 0 !important;
+  @apply pt-1! pr-1!;
 }
 
 /* Czarne strzałki */
 .fc-prev-button,
 .fc-next-button {
-  color: var(--color-panel-black) !important;
+  @apply text-panel-black!;
 }
 
 .fc-prev-button .fc-icon,
 .fc-next-button .fc-icon {
-  color: var(--color-panel-black) !important;
-  fill: var(--color-panel-black) !important;
-  transform: scale(0.8) !important;
+  @apply text-panel-black! fill-panel-black! scale-90!;
+}
+/* dzień dzisiejszy */
+.fc-day-today {
+  @apply relative;
+}
+/* etykieta "DZIŚ" */
+.fc-day-today::after {
+  @apply absolute top-[14px] right-[35px] rounded bg-blue-500 px-1 text-[10px] font-semibold text-white content-["DZIŚ"];
 }
